@@ -1,0 +1,41 @@
+const fanarts = require('../../db/fanart.json')
+
+const hearts = ["❤", "💛", "💚", "💙", "💜"];
+
+module.exports = {
+	desc: "Look at some fanarts <3",
+	usage: "[number]",
+	cooldown: 5,
+	task(bot, msg, suffix) {
+		var choice;
+		if (suffix && !isNaN(parseInt(suffix))) choice = parseInt(suffix) - 1;
+		else choice = Math.floor(fanarts.length * Math.random());
+		if (choice < fanarts.length && choice >= 0) {
+			var random_fanart = fanarts[choice]
+			var randomHearts = hearts[Math.floor(hearts.length * Math.random())]
+			findUser(bot, random_fanart.id || '', author => {
+				bot.createMessage(msg.channel.id, `**${choice + 1}/${fanarts.length}** Created by **${author.username}#${author.discriminator}**
+${random_fanart.url} ${randomHearts}`)
+			});
+		} else {
+			bot.createMessage(msg.channel.id, `I couldn't find any fanart with that number!`)
+		}
+	}
+};
+
+function findUser(bot, id, callback) {
+	var user = bot.users.get(id);
+	if (user == undefined) {
+		bot.getRESTUser(id).then(user => {
+			callback(user);
+			return user;
+		}).catch(() => {
+			callback({
+				username: 'Unknown',
+				discriminator: '????'
+			});
+		})
+	} else {
+		callback(user);
+	}
+}

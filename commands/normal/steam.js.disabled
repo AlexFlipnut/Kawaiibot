@@ -1,0 +1,14 @@
+var request = require("request"),
+	cheerio = require("cheerio");
+
+module.exports = {
+	desc: "Get information about someone's steam",
+	usage: "<info|sig> <steamid>",
+	task(bot, msg, suffix) {
+		/*
+			Command is temporarily disabled.
+			Will rewrite this command another time
+				- AlexFlipnote
+		*/
+	}
+};

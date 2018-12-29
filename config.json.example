@@ -1,0 +1,42 @@
+{
+	"token": "TOKEN",
+	"shardCount": 1,
+	"disableEvents": {
+		"VOICE_STATE_UPDATE": true,
+		"TYPING_START": false,
+		"MESSAGE_DELETE_BULK": true,
+		"MESSAGE_DELETE": true
+	},
+	"commandSets": {
+		"+": {"dir": "commands/normal/"},
+		"?": {"dir": "commands/mod/", "color": "blue"}
+	},
+	"reloadCommand": "?reload",
+	"evalCommand": "?eval",
+	"adminIds": [""],
+	"owner_id": "",
+	"logTimestamp": false,
+	"cleverbot": true,
+	"inviteLink": "http://kawaiibot.cf/auth",
+	"errorMessage": "I could not complete the command ;-;",
+	"carbonKey": "",
+	"botStatsPath": "/var/www/html/kawaiibot/stats.json",
+	"imgurId": "",
+	"mal_user": "",
+	"mal_pass": "",
+	"abalBotsKey": "",
+	"dbotsorg": "",
+	"botlistKey": "",
+	"osu_api_key": "",
+	"weather_api_key":"",
+	"cycleGames": true,
+	"bannedGuildIds": [""],
+	"whitelistedGuildIds": [],
+	"db": {
+        "host": "ip to db",
+        "user": "admin",
+        "password": "password",
+        "database": "database name",
+        "port": 28015
+    }
+}

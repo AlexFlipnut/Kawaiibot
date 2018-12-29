@@ -1,0 +1,365 @@
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+  <title>KawaiiBot Shard Panel</title>
+</head>
+
+<style>
+  @import url('https://fonts.googleapis.com/css?family=PT+Sans|Roboto');
+  html {
+    font-family: 'Roboto', sans-serif;
+  }
+
+  html,
+  body {
+    margin: 0;
+    background-color: #fff;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'PT Sans', sans-serif;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #2d2d2d;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    margin-top: 1rem;
+  }
+
+  .header::before {
+    float: right;
+    margin-top: .25rem;
+    height: 50px;
+    width: 50px;
+    display: block;
+    content: '';
+    background-size: cover;
+  }
+
+  .shard.connected .header::before {
+    background-image: url(https://cdn.discordapp.com/emojis/313956277808005120.png);
+  }
+
+  .shard.handshaking .header::before {
+    background-image: url(https://cdn.discordapp.com/emojis/313956277132853248.png);
+  }
+
+  .shard.connecting .header::before {
+    background-image: url(https://cdn.discordapp.com/emojis/313956277220802560.png);
+  }
+
+  .shard.disconnected .header::before {
+    background-image: url(https://cdn.discordapp.com/emojis/313956277237710868.png);
+  }
+
+  .shard.unresponsive .header::before {
+    background-image: url(https://cdn.discordapp.com/emojis/313956276893646850.png);
+  }
+
+  body {}
+
+  .shard {
+    background: #f2f2f2;
+    padding: .5rem 1rem;
+    flex-basis: 400px;
+    line-height: 2;
+    margin: 1rem;
+  }
+
+  .shard>h2 {
+    color: #2d2d2d;
+  }
+
+  .shard>progress {
+    margin-top: 1rem;
+    width: 100%;
+    border-radius: 1px;
+  }
+
+  footer>.button {
+    margin: .5rem 0;
+    cursor: pointer;
+    background: url('arrow.png');
+    background-size: contain;
+    transform: rotate(270deg);
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 32px;
+    background-position: center center;
+    text-align: center;
+    display: block;
+  }
+
+  footer {
+    width: 100vw;
+    background: #f2f2f2;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+
+  footer>section {
+    display: none;
+    justify-content: center;
+  }
+
+  .legend {
+    margin: 1em 0;
+    padding: 0;
+    font-size: 1rem;
+    list-style: none;
+  }
+
+  .legend-item {
+    list-style: none;
+    padding: .25rem;
+    display: flex;
+  }
+
+  .legend-icon {
+    margin: 0;
+    width: 32px;
+    height: 32px;
+  }
+
+  .legend-content {
+    margin: .5rem 0 0 .5rem;
+    color: #2d2d2d;
+  }
+
+  main {
+    padding: 3rem;
+  }
+
+  hr {
+    margin-top: 2rem;
+    width: 50%;
+    position: absolute;
+    left: 0;
+  }
+
+  header {
+    position: relative;
+    margin-bottom: 5rem;
+  }
+
+  #shards {
+    display: flex;
+    column-count: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .shardStats {
+    margin: 0 auto;
+    width: 66%;
+    max-width: 200px;
+  }
+</style>
+
+<body>
+
+  <main>
+    <header>
+      <h1>Kawaiibot Shard Panel</h1>
+      <h3>Some actual good web design right here</h3>
+      <hr/>
+    </header>
+    <section class="container shardStats">
+      <h2>Shard Stats</h2>
+      <ul>
+        <li>Online Shards: <span id="onlineShardsSpan">0/0</span></li>
+        <li>Dead Shards: <span id="deadShardsSpan">0/0</span></li>
+        <li>Guilds: <span id="totalGuildsSpan">0</span></li>
+      </ul>
+    </section>
+    <section class="container">
+      <div class="row" id="shards">
+
+      </div>
+    </section>
+    <footer>
+      <p id="collapse-button" class="button">
+      </p>
+      <section id="collapse-container">
+        <div class="legend">
+          <div class="legend-item">
+            <img class="legend-icon" src="https://cdn.discordapp.com/emojis/313956277808005120.png" />
+            <p class="legend-content">
+              Connected
+            </p>
+          </div>
+          <div class="legend-item">
+            <img class="legend-icon" src="https://cdn.discordapp.com/emojis/313956277132853248.png" />
+            <p class="legend-content">
+              Handshaking
+            </p>
+          </div>
+          <div class="legend-item">
+            <img class="legend-icon" src="https://cdn.discordapp.com/emojis/313956277220802560.png" />
+            <p class="legend-content">
+              Connecting
+            </p>
+          </div>
+          <div class="legend-item">
+            <img class="legend-icon" src="https://cdn.discordapp.com/emojis/313956277237710868.png" />
+            <p class="legend-content">
+              Disconnected
+            </p>
+          </div>
+          <div class="legend-item">
+            <img class="legend-icon" src="https://cdn.discordapp.com/emojis/313956276893646850.png" />
+            <p class="legend-content">
+              Unresponsive
+            </p>
+          </div>
+      </section>
+
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+  var collapse = document.getElementById('collapse-button');
+  var collapse_container = document.getElementById('collapse-container');
+  var shards = {};
+
+  var shardContainer =  document.querySelector('#shards');
+
+  collapse.onclick = function () {
+    if(collapse_container.style.display === "flex") {
+      collapse_container.style.display = "none";
+      collapse.style.transform = "rotate(270deg)";
+    }
+    else {
+      collapse_container.style.display = "flex";
+      collapse.style.transform = "rotate(90deg)";
+    }
+
+  }
+    var StatusMap = {
+      disconnected: "https://cdn.discordapp.com/emojis/313956277237710868.png",
+      connecting: "https://cdn.discordapp.com/emojis/313956277220802560.png",
+      handshaking: "https://cdn.discordapp.com/emojis/313956277132853248.png",
+      connected: "https://cdn.discordapp.com/emojis/313956277808005120.png",
+      unresponsive: "https://cdn.discordapp.com/emojis/313956276893646850.png"
+    }
+
+    var shards = {};
+    function processBytes(number){
+      return Math.round(number / 1048576 * 10) / 10;
+    }
+    let count = 0;
+
+    function createElement(shard) {
+      var element = shards[shard.id].element
+      if (!element) {
+        element = document.createElement("article")
+        shards[shard.id].element = element;
+        shardContainer.appendChild(element);
+      } 
+      
+      var subShard = shard.shards[0];
+      element.id = `shard_${shard.id}`;
+      var rss = processBytes(shard.memory.rss);
+      var heapUsed = processBytes(shard.memory.heapUsed);
+      var heapTotal = processBytes(shard.memory.heapTotal);
+
+      element.className = "shard " + subShard.status;
+      var output = `<h2 class="header">Shard: ${shard.id}</h2>
+Guilds: ${subShard.size}<br>
+RSS: ${rss} MB<br>
+Heap: ${heapUsed} / ${heapTotal} MB<br>
+Pings: ${shards[shard.id].pings}<br>
+<progress class="ramBar" value="${heapUsed}" max="${heapTotal}"> ${heapUsed} / ${heapTotal} MB </progress>
+      `;
+      element.innerHTML = output;
+      return element;
+    }
+
+    var ES = new EventSource('/stats')
+    ES.addEventListener('stats', (e) => {
+      var data = JSON.parse(e.data);
+      if (!shards[data.id]) shards[data.id] = {
+        pings: 1,
+        lastPing: Date.now(),
+        data
+      }
+      else {
+        shards[data.id].data = data;
+        shards[data.id].lastPing = Date.now();
+        shards[data.id].pings++;
+      }
+      createElement(data);
+    });
+    ES.addEventListener('allStats', (e) => {
+      var data = JSON.parse(e.data);
+      var newShards = data.shards
+      for (var key in newShards) {
+        if (!shards[newShards[key].id]) shards[newShards[key].id] = {
+          pings: 1,
+          lastPing: Date.now(),
+          data: newShards[key]
+        }
+        else {
+          shards[newShards[key].id].data = newShards[key];
+          shards[newShards[key].id].lastPing = Date.now();
+          shards[newShards[key].id].pings++;
+        }
+        createElement(newShards[key]);
+      }
+      checkStatus();
+    });
+
+    let guildCountElement = document.getElementById('totalGuildsSpan');
+    let deadShardsElement = document.getElementById('deadShardsSpan');
+    let onlineShardsElement = document.getElementById('onlineShardsSpan');
+
+    function checkStatus() {
+      let guildCount = 0, onlineCount = 0, deadCount = 0;
+      for (var key in shards) {
+        var shard = shards[key];
+        if (Date.now() - shard.lastPing > 10000) {
+          shard.element.classList.add('unresponsive');
+        }
+        guildCount += shard.data.shards[0].size;
+        if (shard.element.classList.contains('unresponsive')) deadCount++;
+        else if (shard.element.classList.contains('connected')) onlineCount++;
+      }
+      guildCountElement.innerHTML = guildCount;
+      deadShardsElement.innerHTML = deadCount + '/' + Object.keys(shards).length;
+      onlineShardsElement.innerHTML = onlineCount + '/' + Object.keys(shards).length;
+    }
+
+    setInterval(checkStatus, 10000);
+  </script>
+</body>
+
+</html>
