@@ -1,3 +1,10 @@
+### NOTE:
+
+This is the original KawaiiBot source from 2016-2017. It was forked from Mirai and AlexShitnuts added his own garbage on top. Alex doesn't want you to know that he's a terribad script kiddie that never makes anything original and flat out denies forking Mirai. Look through the code and see for yourself.
+
+======
+
+
 KawaiiBot
 ======
 
